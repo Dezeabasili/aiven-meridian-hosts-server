@@ -63,7 +63,7 @@ const createHotel = async (req, res, next) => {
 
   const mysqlConnection = await db();
   try {
- 
+    
 
     let queryString2;
 
@@ -244,6 +244,7 @@ const createHotel = async (req, res, next) => {
       q = "DELETE FROM hotelstaff WHERE id_users IN (" + deleteString2 + " )";
       await mysqlConnection.execute(q, hotelStaffList);
     }
+
     next(err);
   } finally {
     await mysqlConnection.end()
@@ -254,6 +255,8 @@ const createHotel = async (req, res, next) => {
 const getAllHotels = async (req, res, next) => {
   const mysqlConnection = await db();
   try {
+
+
     let selections =
       "cities.cityName, cities.id_cities, hotels.id_hotels, hotels.name, hotels.description, hotels.detailedDescription, hotels.photos, " + 
       " hotels.photo_id, hotels.numberOfRatings, hotels.ratingsAverage, hotels.cheapestPrice, hoteltypes.hotelType, hoteltypes.id_hotelTypes ";
@@ -394,9 +397,9 @@ const getAllHotels = async (req, res, next) => {
 
 // List hotels within a price range
 const getAllHotelsWithinPriceRange = async (req, res, next) => {
-  const mysqlConnection = await db();
+  const mysqlConnection = await db()
   try {
-
+    const mysqlConnection = await db();
     const minPrice = req.query.min * 1 || 0;
     const maxPrice = req.query.max * 1 || 1000;
     let selections =
@@ -465,6 +468,7 @@ const getAllHotelsWithinPriceRange = async (req, res, next) => {
       hotels.push(eachHotel);
     });
 
+
     res.status(200).json({
       number: hotels.length,
       data: hotels,
@@ -480,7 +484,7 @@ const getAllHotelsWithinPriceRange = async (req, res, next) => {
 const getHotel = async (req, res, next) => {
   const mysqlConnection = await db();
   try {
-
+    
 
     let selections =
       "cities.cityName, cities.id_cities, hotels.id_hotels, hotels.name, hotels.description, hotels.detailedDescription, hotels.photos, " + 
@@ -533,6 +537,8 @@ const getHotel = async (req, res, next) => {
       hotels.push(eachHotel);
     });
 
+
+
     res.status(200).json({
       data: hotels[0],
     });
@@ -548,10 +554,10 @@ const updateHotel = async (req, res, next) => {
   let queryString1 = "";
   let values1 = [];
   let queryString2 = "";
-  const mysqlConnection = await db();
 
+  const mysqlConnection = await db();
   try {
- 
+    
 
     // check if the hotel exist
     let q = "SELECT * FROM hotels WHERE id_hotels = ?";
@@ -741,6 +747,7 @@ const updateHotel = async (req, res, next) => {
       const results1 = await mysqlConnection.execute(q, values1);
     }
 
+
     // console.log(14)
     res.status(200).json({ data: "Done" });
   } catch (err) {
@@ -754,7 +761,7 @@ const updateHotel = async (req, res, next) => {
 const deleteHotel = async (req, res, next) => {
   const mysqlConnection = await db();
   try {
-   
+ 
     // check if the hotel exist
     let q = "SELECT * FROM hotels WHERE id_hotels = ?";
     const [hotelArray] = await mysqlConnection.execute(q, [
@@ -832,7 +839,7 @@ const countByTypeNew = async (req, res, next) => {
   let hotelTypeData = [];
   const mysqlConnection = await db();
   try {
-
+    
     let q =
       "SELECT * FROM (SELECT id_hotelTypes, COUNT(id_hotelTypes) AS numberOfHotels FROM hotels GROUP BY id_hotelTypes) AS abcd INNER JOIN hoteltypes ON abcd.id_hotelTypes = hoteltypes.id_hotelTypes";
 
@@ -961,7 +968,7 @@ const getHotelRooms = async (req, res, next) => {
       });
     });
 
-    console.log("hotelRoomStyles: ", hotelRoomStyles)
+    // console.log("hotelRoomStyles: ", hotelRoomStyles)
 
     res.status(200).json({
       data: hotelRoomStyles,
@@ -1027,9 +1034,10 @@ const createHotelType = async (req, res, next) => {
 const getAllHotelCityRefs = async (req, res, next) => {
   const mysqlConnection = await db();
   try {
- 
+
     let q = "SELECT * FROM cities";
     const [citiesArray, fields] = await mysqlConnection.execute(q, []);
+
     res.status(200).json({
       data: citiesArray,
     });
@@ -1047,6 +1055,7 @@ const getAllHotelTypeRefs = async (req, res, next) => {
 
     let q = "SELECT * FROM hoteltypes";
     const [hotelTypeArray, fields] = await mysqlConnection.execute(q, []);
+
     res.status(200).json({
       data: hotelTypeArray,
     });

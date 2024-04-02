@@ -12,8 +12,7 @@ const db =  async () => {
     port: process.env.AIVEN_PORT,
     ssl: {
       rejectUnauthorized: true,
-      // ca: fs.readFileSync("./ca.pem").toString(),
-      ca: fs.readFileSync("./../ca.pem").toString(),
+      ca: fs.readFileSync(path.join(__dirname, "..", "ca.pem")).toString(),
     },
 
   })
