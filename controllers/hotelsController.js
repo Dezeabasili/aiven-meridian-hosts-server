@@ -409,16 +409,17 @@ const getAllHotelsWithinPriceRange = async (req, res, next) => {
     let q =
       "SELECT " +
       selections +
-      " FROM cities INNER JOIN hotels ON cities.id_cities = hotels.id_cities INNER JOIN hoteltypes ON hotels.id_hotelTypes = hoteltypes.id_hotelTypes WHERE cheapestPrice BETWEEN ? AND ?";
+      // " FROM cities INNER JOIN hotels ON cities.id_cities = hotels.id_cities INNER JOIN hoteltypes ON hotels.id_hotelTypes = hoteltypes.id_hotelTypes WHERE cheapestPrice BETWEEN ? AND ?";
+      " FROM cities INNER JOIN hotels ON cities.id_cities = hotels.id_cities INNER JOIN hoteltypes ON hotels.id_hotelTypes = hoteltypes.id_hotelTypes WHERE cheapestPrice BETWEEN " + minPrice + " AND " + maxPrice ;
     let values = [];
-    values.push(minPrice);
-    values.push(maxPrice);
+    // values.push(minPrice);
+    // values.push(maxPrice);
 
     if (req.query.city) {
       q =
         "SELECT " +
         selections +
-        " FROM cities INNER JOIN hotels ON cities.id_cities = hotels.id_cities INNER JOIN hoteltypes ON hotels.id_hotelTypes = hoteltypes.id_hotelTypes WHERE cheapestPrice BETWEEN ? AND ? AND cityName = ?";
+        " FROM cities INNER JOIN hotels ON cities.id_cities = hotels.id_cities INNER JOIN hoteltypes ON hotels.id_hotelTypes = hoteltypes.id_hotelTypes WHERE cheapestPrice BETWEEN " + minPrice + " AND " + maxPrice +  " AND cityName = ?";
       values.push(req.query.city);
     }
 
