@@ -232,7 +232,7 @@ const createHotel = async (req, res, next) => {
       data: hotel,
     });
   } catch (err) {
-    const mysqlConnection = await db();
+
     // delete the already inserted hotel
     if (insertedHotel) {
       q = "DELETE FROM hotels WHERE id_hotels = ?";
@@ -399,7 +399,7 @@ const getAllHotels = async (req, res, next) => {
 const getAllHotelsWithinPriceRange = async (req, res, next) => {
   const mysqlConnection = await db()
   try {
-    const mysqlConnection = await db();
+
     const minPrice = req.query.min * 1 || 0;
     const maxPrice = req.query.max * 1 || 1000;
     let selections =
