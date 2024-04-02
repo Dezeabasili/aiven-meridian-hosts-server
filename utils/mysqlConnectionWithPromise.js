@@ -13,7 +13,7 @@ const db =  async () => {
     ssl: {
       rejectUnauthorized: true,
       // ca: fs.readFileSync("./ca.pem").toString(),
-      ca: fs.readFileSync("./ca.pem").toString(),
+      ca: fs.readFileSync("./../ca.pem").toString(),
     },
 
   })
